@@ -3,134 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XGBoost - Documentación Avanzada</title>
+    <title>XGBoost | Documentación Técnica de Alto Rendimiento</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Optimización de scroll y selección para un acabado más profesional */
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: #10b981; color: #ffffff; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-emerald-500 selection:text-white">
 
-    <header class="bg-slate-900 text-white py-12 px-6 shadow-md border-b-4 border-emerald-500">
-        <div class="max-w-5xl mx-auto">
-            <span class="text-emerald-400 font-mono text-sm tracking-widest uppercase block mb-2">Algoritmos Avanzados</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">eXtreme Gradient Boosting (XGBoost)</h1>
-            <p class="mt-4 text-lg text-slate-300 max-w-3xl leading-relaxed">
-                Una biblioteca de potenciación de gradiente distribuida y optimizada, diseñada para ser altamente eficiente, flexible y portátil[cite: 2].
+    <header class="bg-slate-900 text-white py-16 px-6 shadow-lg border-b-4 border-emerald-600 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+        <div class="max-w-5xl mx-auto relative z-10">
+            <span class="text-emerald-400 font-mono text-xs tracking-widest uppercase bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+                Sistemas de Aprendizaje Distribuido
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mt-4">
+                eXtreme Gradient Boosting <span class="text-emerald-500">(XGBoost)</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-300 max-w-3xl leading-relaxed font-light">
+                Exploración profunda de la biblioteca de potenciación de gradiente optimizada, diseñada para ser altamente eficiente, flexible, portátil y escalable en entornos de producción masivos.
             </p>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-10 space-y-12">
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-xs hidden md:block">
+        <div class="max-w-5xl mx-auto px-6 py-3.5 flex space-x-8 text-sm font-medium text-slate-600">
+            <a href="#arquitectura" class="hover:text-emerald-600 transition-colors">Core & Arquitectura</a>
+            <a href="#optimizacion" class="hover:text-emerald-600 transition-colors">Optimización Computacional</a>
+            <a href="#boosters" class="hover:text-emerald-600 transition-colors">Tipos de Aprendices</a>
+            <a href="#pipeline" class="hover:text-emerald-600 transition-colors">Flujo de Trabajo</a>
+            <a href="#hiperparametros" class="hover:text-emerald-600 transition-colors">Hiperparámetros</a>
+            <a href="#aplicaciones" class="hover:text-emerald-600 transition-colors">Casos de Uso</a>
+        </div>
+    </nav>
 
-        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-            <h2 class="text-2xl font-bold text-slate-900 mb-4 border-b pb-2 border-slate-200">📌 ¿Qué es XGBoost?</h2>
-            <p class="leading-relaxed text-slate-600 mb-4">
-                XGBoost es la abreviatura de <strong>"extreme gradient boosting"</strong>[cite: 6]. Implementa algoritmos de aprendizaje automático bajo el marco de potenciación de gradiente [cite: 3] y es un método supervisado ideal para tareas de clasificación y regresión[cite: 5].
-            </p>
-            <p class="leading-relaxed text-slate-600">
-                A diferencia de otros métodos como los bosques aleatorios, donde los árboles se entrenan de forma independiente [cite: 95], XGBoost funciona de manera secuencial: combina muchos aprendices débiles para formar un modelo fuerte [cite: 90], donde cada nuevo árbol corrige los errores o residuales de las iteraciones anteriores[cite: 91, 110].
-            </p>
-        </section>
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
 
-        <section>
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">⚡ Características de Alto Rendimiento</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="arquitectura" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">01. Fundamentos y Arquitectura Core</h2>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-xs border border-slate-200/80 space-y-6">
+                <p class="leading-relaxed text-slate-600 text-base">
+                    <strong>XGBoost</strong> representa una evolución optimizada dentro del marco de aprendizaje automático supervisado para tareas complejas de clasificación, regresión y ordenación jerárquica (ranking). Su núcleo operativo se fundamenta en los <strong>Árboles de Decisión Potenciados por Gradiente (GBDT / GBM)</strong>.
+                </p>
                 
-                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-500">
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Computación Distribuida</h3>
-                    <p class="text-sm text-slate-600">Almacena datos en unidades de memoria llamadas bloques[cite: 11]. Permite el entrenamiento distribuido en clústeres usando herramientas como Apache Spark, Dask o Kubernetes[cite: 13, 14].</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500">
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Precarga en Caché</h3>
-                    <p class="text-sm text-slate-600">Emplea un algoritmo de precarga que reduce drásticamente el tiempo de ejecución [cite: 15], permitiendo procesar miles de millones de ejemplos de forma escalable[cite: 17].</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Regularización Integrada</h3>
-                    <p class="text-sm text-slate-600">Incluye regularización matemática como parte del objetivo de aprendizaje (L1 y L2) para evitar de forma directa el sobreajuste del modelo[cite: 18, 93, 118].</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-rose-500">
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Manejo de Valores Faltantes</h3>
-                    <p class="text-sm text-slate-600">Utiliza un algoritmo consciente de la escasez para datos dispersos. Aprende de manera automática la mejor dirección predeterminada para clasificar los missing values[cite: 21, 22].</p>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">🔄 Flujo de Trabajo Típico</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-100 text-slate-700 font-semibold text-sm">
-                            <th class="p-4 rounded-l-lg">Paso</th>
-                            <th class="p-4">Fase</th>
-                            <th class="p-4 rounded-r-lg">Acción Principal</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm divide-y divide-slate-100">
-                        <tr>
-                            <td class="p-4 font-bold text-emerald-600">01</td>
-                            <td class="p-4 font-semibold text-slate-900">Preparación</td>
-                            <td class="p-4 text-slate-600">Dividir los datos en entrenamiento/prueba y convertirlos al formato interno optimizado <strong>DMatrix</strong>[cite: 24, 26].</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-emerald-600">02</td>
-                            <td class="p-4 font-semibold text-slate-900">Configuración</td>
-                            <td class="p-4 text-slate-600">Seleccionar la función objetivo adecuada según la tarea (ej. <code>binary:logistic</code> o <code>multi:softmax</code>)[cite: 29, 30, 31].</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-emerald-600">03</td>
-                            <td class="p-4 font-semibold text-slate-900">Evaluación</td>
-                            <td class="p-4 text-slate-600">Entrenar el modelo y medir su desempeño mediante métricas como precisión, recall, F1-score o matrices de confusión[cite: 32, 34, 35].</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-bold text-emerald-600">04</td>
-                            <td class="p-4 font-semibold text-slate-900">Optimización</td>
-                            <td class="p-4 text-slate-600">Ajustar hiperparámetros mediante validación cruzada (CV) y búsqueda en cuadrícula (Grid Search)[cite: 40].</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">🎛️ Hiperparámetros Críticos</h2>
-            <div class="space-y-4">
-                <div class="p-4 bg-slate-50 rounded-lg">
-                    <span class="font-mono text-indigo-600 font-bold">eta (Learning Rate):</span>
-                    <p class="text-sm text-slate-600 mt-1">Controla el tamaño de paso o contracción del algoritmo (por defecto es 0.3)[cite: 43, 46]. Un valor menor ayuda a evitar el sobreajuste al ralentizar el aprendizaje[cite: 48].</p>
-                </div>
-                <div class="p-4 bg-slate-50 rounded-lg">
-                    <span class="font-mono text-indigo-600 font-bold">n_estimators:</span>
-                    <p class="text-sm text-slate-600 mt-1">Especifica el número de árboles secuenciales a construir[cite: 50]. Añadir demasiados puede generar sobreajuste, por lo que suele equilibrarse bajando la tasa <code>eta</code>[cite: 54].</p>
-                </div>
-                <div class="p-4 bg-slate-50 rounded-lg">
-                    <span class="font-mono text-indigo-600 font-bold">max_depth:</span>
-                    <p class="text-sm text-slate-600 mt-1">Representa la profundidad máxima que puede alcanzar cada árbol (por defecto es 6)[cite: 60, 63]. Aumentar este valor incrementa la complejidad del modelo y el riesgo de sobreajuste[cite: 62].</p>
-                </div>
-                <div class="p-4 bg-slate-50 rounded-lg">
-                    <span class="font-mono text-indigo-600 font-bold">gamma:</span>
-                    <p class="text-sm text-slate-600 mt-1">Controla la cantidad mínima de reducción de pérdida requerida para realizar una división adicional en un nodo[cite: 55]. Funciona como un parámetro de poda[cite: 117].</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-950 mb-2 text-sm uppercase tracking-wider text-slate-500">Filosofía Secuencial (Boosting)</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            A diferencia de arquitecturas basadas en Bagging (como Random Forest) donde los árboles se ramifican de manera independiente, XGBoost ejecuta un entrenamiento secuencial estructurado. Cada nuevo estimador se acopla con el objetivo explícito de corregir los residuos numéricos y errores de predicción acumulados por los árboles predecesores.
+                        </p>
+                    </div>
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-950 mb-2 text-sm uppercase tracking-wider text-slate-500">Optimización Basada en Gradientes</h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Durante cada iteración o ronda de entrenamiento, el algoritmo calcula los gradientes de primer y segundo orden de la función de pérdida. Esto permite minimizar de manera analítica y precisa la función objetivo del sistema, logrando convergencias estables incluso en presencia de ruidos estructurales en las variables.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="bg-slate-900 text-white p-8 rounded-xl shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-400 mb-6 border-b pb-2 border-slate-700">🎯 Aplicaciones en el Mundo Real</h2>
-            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
-                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Sistemas de Clasificación y Ranking:</strong> Recuperación de información optimizada mediante XGBRanker[cite: 66, 68].</li>
-                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Análisis Predictivo de Ventas:</strong> Modelado comercial masivo (ej. predicción de ventas en tiendas Walmart)[cite: 71].</li>
-                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Modelos GeoAI y Tabulares:</strong> Altamente utilizado en analítica de geodatos, salud y finanzas[cite: 134].</li>
-                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Competencias en Kaggle:</strong> Es uno de los algoritmos más populares y ganadores debido a su velocidad y precisión combinadas[cite: 73, 135].</li>
-            </ul>
+        <section id="optimizacion" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">02. Innovaciones Computacionales de Alto Rendimiento</h2>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+                La biblioteca destaca en entornos empresariales e industriales debido a su capacidad para procesar miles de millones de registros combinando la optimización de hardware con algoritmos avanzados de estructuración de datos en memoria.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-200/60 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold mb-4 font-mono text-sm">CD</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Cómputo Paralelo, Distribuido y Out-of-Core</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Los datos son segmentados internamente en estructuras denominadas bloques en memoria. Esto permite la distribución del procesamiento entre hilos de CPU, tarjetas GPU o clústeres independientes administrados mediante frameworks como <strong>Apache Spark, Dask o Kubernetes</strong>. Ante datasets que exceden la memoria RAM, implementa técnicas fuera del núcleo (out-of-core) utilizando almacenamiento externo optimizado.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-200/60 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold mb-4 font-mono text-sm">PC</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Algoritmos de Precarga y Acceso Sensible a Caché</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Asigna búferes internos en cada hilo para almacenar estadísticas de los gradientes a través de rutinas de <em>prefetch</em>. Esta optimización de bajo nivel permite acelerar el entrenamiento hasta diez veces en comparación con implementaciones tradicionales, maximizando el rendimiento del procesador al mitigar los cuellos de botella de lecturas en memoria.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-200/60 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 font-bold mb-4 font-mono text-sm">RI</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Regularización Matemática Formal Integrada</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            A diferencia del boosting convencional, la función objetivo formal de XGBoost penaliza de manera nativa la complejidad del modelo a través de regularizaciones <strong>L1 (Lasso / Alpha)</strong> y <strong>L2 (Ridge / Lambda)</strong>. Esta restricción matemática controla la varianza del ensamble y previene directamente el sobreajuste (overfitting).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-200/60 flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 font-bold mb-4 font-mono text-sm">MV</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Algoritmo Consciente de Escasez y Nulos</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Ante registros incompletos o matrices dispersas, el algoritmo evalúa de forma automática ambas ramificaciones de un nodo para aprender la dirección óptima predeterminada (default direction). No requiere de pasos complejos de imputación previa, manteniendo una alta eficiencia operativa y robustez analítica.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="boosters" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">03. Componentes de Modelado y Métodos de Construcción</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900">Tipos de Aprendices Base (Boosters)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        XGBoost flexibiliza su motor analítico permitiendo conmutar entre diferentes estructuras base dependiendo de la naturaleza matemática de la tarea:
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">gbtree:</strong> El aproximador estándar basado en árboles de decisión para capturar fronteras de decisión marcadamente no lineales.
+                        </li>
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">dart:</strong> Incorpora rutinas de <em>Dropout</em> aplicadas a árboles de decisión múltiples, desactivando estimadores de forma aleatoria durante rondas específicas para evitar que los primeros árboles dominen el ensamble.
+                        </li>
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">gblinear:</strong> Implementa funciones lineales regularizadas en lugar de particiones ramificadas, ideal cuando los datos exhiben linealidad estricta y alta dispersión.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-900">Algoritmos de Partición (Tree Methods)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Para evaluar y seleccionar los puntos de corte en variables continuas de manera eficiente, el framework integra diferentes estrategias algorítmicas:
+                    </p>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">exact:</strong> Analiza minuciosamente todos los puntos de división posibles. Ofrece una precisión matemática absoluta pero requiere un alto consumo de recursos en grandes volúmenes de datos.
+                        </li>
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">approx & hist:</strong> Construyen bocetos de cuantiles e histogramas discretizados para agrupar las variables continuas en contenedores fijados (bins). Esto reduce drásticamente el costo computacional de búsqueda de cortes lineales.
+                        </li>
+                        <li class="bg-white p-3 rounded-xl border border-slate-200">
+                            <strong class="text-slate-900 font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">gpu_hist:</strong> Ejecuta la construcción integral del histograma y las operaciones matemáticas de partición directamente dentro de arquitecturas de hardware NVIDIA CUDA, acelerando los procesos de analítica masiva.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="pipeline" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">04. Flujo de Trabajo e Ingeniería de Modelado</h2>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+                El despliegue operativo de XGBoost exige una estructuración meticulosa del ciclo de vida del dato para asegurar predicciones estables y con una alta capacidad de generalización sobre datos no observados.
+            </p>
+            
+            <div class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-200 text-xs font-mono uppercase tracking-wider">
+                                <th class="p-4 pl-6 w-20">Fase</th>
+                                <th class="p-4 w-44">Etapa Operativa</th>
+                                <th class="p-4">Detalles y Directrices Técnicas</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-slate-200 text-slate-600">
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="p-4 pl-6 font-mono font-bold text-emerald-600 text-base">01</td>
+                                <td class="p-4 font-bold text-slate-900">Estructuración DMatrix</td>
+                                <td class="p-4 leading-relaxed">
+                                    Tras completar el análisis exploratorio de datos (EDA) para identificar nulos y sesgos, se realiza la separación en conjuntos de entrenamiento y prueba. Los vectores finales se transforman al formato interno <strong>DMatrix</strong>, una estructura de datos optimizada en C++ que reduce el uso de memoria RAM y maximiza sustancialmente la velocidad de procesamiento.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="p-4 pl-6 font-mono font-bold text-emerald-600 text-base">02</td>
+                                <td class="p-4 font-bold text-slate-900">Asignación del Objetivo</td>
+                                <td class="p-4 leading-relaxed">
+                                    Se configura el hiperparámetro <code>objective</code> para mapear la tarea analítica de interés. Ejemplos estándar incluyen: <code>binary:logistic</code> para clasificaciones binarias, <code>multi:softmax</code> para problemas multiclase con salida discreta, o <code>reg:squarederror</code> para tareas cuantitativas de regresión.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="p-4 pl-6 font-mono font-bold text-emerald-600 text-base">03</td>
+                                <td class="p-4 font-bold text-slate-900">Validación Multimétrica</td>
+                                <td class="p-4 leading-relaxed">
+                                    Se ejecuta el entrenamiento cruzado evaluando el rendimiento en datos independientes mediante métricas estadísticas rigurosas. En clasificación, se monitorea la exactitud (accuracy), precisión, sensibilidad (recall), puntuación F1 y el área bajo la curva (AUC). En regresión, se cuantifican los errores mediante RMSE o MAE.
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="p-4 pl-6 font-mono font-bold text-emerald-600 text-base">04</td>
+                                <td class="p-4 font-bold text-slate-900">Ajuste e Interpretabilidad</td>
+                                <td class="p-4 leading-relaxed">
+                                    Se implementan estrategias de búsqueda exhaustiva (Grid Search) o probabilística (Random Search) combinadas con validación cruzada (CV). Finalmente, los resultados se interpretan extrayendo la importancia intrínseca de variables (basada en ganancia, peso o cobertura) o mediante valores aditivos de <strong>SHAP (SHapley Additive exPlanations)</strong>.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="hiperparametros" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">05. Diccionario Avanzado de Hiperparámetros</h2>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+                El control de la complejidad y la sintonización fina del balance sesgo-varianza se realiza a través de la calibración precisa de los siguientes hiperparámetros de control:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">eta</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">Por defecto: 0.3</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Tasa de Aprendizaje / Contracción (Learning Rate)</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            Acota la contribución de cada nuevo árbol al ensamble global mediante un rango estricto entre 0 y 1. Reducir el valor de <code>eta</code> ralentiza de forma controlada el aprendizaje del sistema, obligando a los árboles a corregir errores residuales de manera más conservadora y robusta, lo que disminuye drásticamente el riesgo de sobreajuste.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">n_estimators</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">num_boost_round</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Número Total de Estimadores / Árboles</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            Establece el límite máximo de árboles secuenciales a construir en las rondas de boosting. Incrementar este valor eleva de forma lineal la complejidad estructural del modelo para capturar patrones intrincados. No obstante, un número desmedido genera sobreajuste severo. Axioma de control: a medida que aumenta <code>n_estimators</code>, la tasa <code>eta</code> debe decrecer proporcionalmente.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">max_depth</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">Por defecto: 6</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Profundidad Máxima de Árboles</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            Determina la cantidad máxima de niveles o divisiones desde el nodo raíz hasta las hojas terminales. Árboles muy profundos memorizan el ruido muestral e inducen una alta varianza. Valores bajos mitigan el sobreajuste pero corren el riesgo de caer en subajuste (underfitting). El valor predeterminado de 6 suele ser un punto de partida óptimo en la industria.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">gamma</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">min_split_loss</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Parámetro de Reducción Mínima de Pérdida</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            Funciona como un multiplicador de Lagrange que cuantifica la ganancia mínima obligatoria que debe aportar una división en un nodo para poder ejecutarse. Si la ganancia calculada no supera el umbral de <code>gamma</code>, la rama se descarta de forma inmediata. No posee límite superior formal; valores mayores a 10 imponen una poda severa y conservadora.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">subsample / colsample_*</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">Rango: (0, 1]</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Fraccionamiento y Muestreo de Filas / Columnas</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            <code>subsample</code> controla el porcentaje de filas elegidas de manera aleatoria para construir cada árbol, mientras que <code>colsample_bytree</code> o <code>colsample_bylevel</code> submuestrean las columnas o variables explicativas. Introducir aleatoriedad en estos planos imita el comportamiento de Random Forest y robustece la tolerancia a ruidos externos.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between space-y-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-mono font-bold text-indigo-600 text-base">scale_pos_weight</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">Control de Balance</span>
+                        </div>
+                        <p class="font-semibold text-slate-900 mb-1">Ajuste de Pesos para Clases Desbalanceadas</p>
+                        <p class="text-slate-600 leading-relaxed text-xs">
+                            Parámetro crítico en tareas de clasificación binaria donde la clase de interés se encuentra fuertemente subrepresentada (por ejemplo, detección de fraudes o fallas estructurales). Típicamente se configura calculando el ratio entre la suma total de ejemplos negativos sobre ejemplos positivos para penalizar severamente los falsos negativos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aplicaciones" class="scroll-mt-20 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-200 pb-3">
+                <div class="h-7 w-2 bg-emerald-600 rounded-sm"></div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">06. Aplicaciones Industriales y Despliegue Crítico</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-3">
+                    <h4 class="font-bold text-slate-900 text-base flex items-center">
+                        <span class="text-emerald-500 mr-2">📊</span> Finanzas y Negocios
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Implementado a gran escala en modelos de scoring crediticio, análisis predictivo de deserción de clientes (churn), pronósticos multitemporales de ventas en cadenas de retail masivo (como Walmart) y evaluación predictiva de riesgos de fraude transaccional.
+                    </p>
+                </div>
+
+                <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-3">
+                    <h4 class="font-bold text-slate-900 text-base flex items-center">
+                        <span class="text-emerald-500 mr-2">🌍</span> GeoAI y Geociencias
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Alineado nativamente con plataformas avanzadas de análisis espacial (como ArcGIS Pro en su caja de herramientas GeoAI y AutoML). Es el motor estándar para procesar datos tabulares georreferenciados, clasificación automatizada de coberturas de suelo y modelamiento predictivo ambiental.
+                    </p>
+                </div>
+
+                <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-3">
+                    <h4 class="font-bold text-slate-900 text-base flex items-center">
+                        <span class="text-emerald-500 mr-2">💻</span> Ciberseguridad e InfoSec
+                    </h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Utilizado para la clasificación de malware y amenazas informáticas de día cero a partir de vectores de características complejos extraídos de archivos ejecutables sospechosos, garantizando tasas de falsos positivos extremadamente bajas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border border-amber-200 p-6 rounded-xl flex items-start space-x-4">
+                <div class="text-amber-600 text-xl font-bold mt-0.5">⚠️</div>
+                <div class="space-y-1">
+                    <h5 class="font-bold text-amber-900 text-sm">Consideración Crucial de Despliegue</h5>
+                    <p class="text-xs text-amber-800 leading-relaxed">
+                        A pesar de su extraordinario poder predictivo y flexibilidad algorítmica, XGBoost es un modelo de <strong>caja negra</strong> de alta complejidad. Requiere una sintonización meticulosa de hiperparámetros para mitigar riesgos latentes de sobreajuste y, por su naturaleza matemática multicapa, carece de la interpretabilidad analítica directa que ofrece un árbol de decisión simple.
+                    </p>
+                </div>
+            </div>
         </section>
 
     </main>
 
-    <footer class="bg-slate-100 text-center py-6 text-xs text-slate-500 border-t border-slate-200 mt-12">
-        <p>Documentación generada con base en guías oficiales de XGBoost y analítica avanzada[cite: 137].</p>
+    <footer class="bg-slate-900 text-slate-400 py-12 px-6 border-t border-slate-800 text-xs font-mono">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-center md:text-left">
+            <div>
+                <p class="font-bold text-slate-200">XGBoost | Repositorio de Documentación Técnica</p>
+                <p class="mt-1 text-slate-500">Compilado con base en la documentación de XGBoost 3.2.0, ArcGIS Pro GeoAI, e IBM Think.</p>
+            </div>
+            <div class="text-slate-500">
+                <p>Diseño Web Optimizado con Tailwind CSS</p>
+            </div>
+        </div>
     </footer>
 
-</body>
+    </body>
 </html>
