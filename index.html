@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XGBoost - Documentación Avanzada</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <header class="bg-slate-900 text-white py-12 px-6 shadow-md border-b-4 border-emerald-500">
+        <div class="max-w-5xl mx-auto">
+            <span class="text-emerald-400 font-mono text-sm tracking-widest uppercase block mb-2">Algoritmos Avanzados</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">eXtreme Gradient Boosting (XGBoost)</h1>
+            <p class="mt-4 text-lg text-slate-300 max-w-3xl leading-relaxed">
+                Una biblioteca de potenciación de gradiente distribuida y optimizada, diseñada para ser altamente eficiente, flexible y portátil[cite: 2].
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-10 space-y-12">
+
+        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4 border-b pb-2 border-slate-200">📌 ¿Qué es XGBoost?</h2>
+            <p class="leading-relaxed text-slate-600 mb-4">
+                XGBoost es la abreviatura de <strong>"extreme gradient boosting"</strong>[cite: 6]. Implementa algoritmos de aprendizaje automático bajo el marco de potenciación de gradiente [cite: 3] y es un método supervisado ideal para tareas de clasificación y regresión[cite: 5].
+            </p>
+            <p class="leading-relaxed text-slate-600">
+                A diferencia de otros métodos como los bosques aleatorios, donde los árboles se entrenan de forma independiente [cite: 95], XGBoost funciona de manera secuencial: combina muchos aprendices débiles para formar un modelo fuerte [cite: 90], donde cada nuevo árbol corrige los errores o residuales de las iteraciones anteriores[cite: 91, 110].
+            </p>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">⚡ Características de Alto Rendimiento</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-500">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Computación Distribuida</h3>
+                    <p class="text-sm text-slate-600">Almacena datos en unidades de memoria llamadas bloques[cite: 11]. Permite el entrenamiento distribuido en clústeres usando herramientas como Apache Spark, Dask o Kubernetes[cite: 13, 14].</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Precarga en Caché</h3>
+                    <p class="text-sm text-slate-600">Emplea un algoritmo de precarga que reduce drásticamente el tiempo de ejecución [cite: 15], permitiendo procesar miles de millones de ejemplos de forma escalable[cite: 17].</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Regularización Integrada</h3>
+                    <p class="text-sm text-slate-600">Incluye regularización matemática como parte del objetivo de aprendizaje (L1 y L2) para evitar de forma directa el sobreajuste del modelo[cite: 18, 93, 118].</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-rose-500">
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Manejo de Valores Faltantes</h3>
+                    <p class="text-sm text-slate-600">Utiliza un algoritmo consciente de la escasez para datos dispersos. Aprende de manera automática la mejor dirección predeterminada para clasificar los missing values[cite: 21, 22].</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">🔄 Flujo de Trabajo Típico</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 font-semibold text-sm">
+                            <th class="p-4 rounded-l-lg">Paso</th>
+                            <th class="p-4">Fase</th>
+                            <th class="p-4 rounded-r-lg">Acción Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-slate-100">
+                        <tr>
+                            <td class="p-4 font-bold text-emerald-600">01</td>
+                            <td class="p-4 font-semibold text-slate-900">Preparación</td>
+                            <td class="p-4 text-slate-600">Dividir los datos en entrenamiento/prueba y convertirlos al formato interno optimizado <strong>DMatrix</strong>[cite: 24, 26].</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-emerald-600">02</td>
+                            <td class="p-4 font-semibold text-slate-900">Configuración</td>
+                            <td class="p-4 text-slate-600">Seleccionar la función objetivo adecuada según la tarea (ej. <code>binary:logistic</code> o <code>multi:softmax</code>)[cite: 29, 30, 31].</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-emerald-600">03</td>
+                            <td class="p-4 font-semibold text-slate-900">Evaluación</td>
+                            <td class="p-4 text-slate-600">Entrenar el modelo y medir su desempeño mediante métricas como precisión, recall, F1-score o matrices de confusión[cite: 32, 34, 35].</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-bold text-emerald-600">04</td>
+                            <td class="p-4 font-semibold text-slate-900">Optimización</td>
+                            <td class="p-4 text-slate-600">Ajustar hiperparámetros mediante validación cruzada (CV) y búsqueda en cuadrícula (Grid Search)[cite: 40].</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2 border-slate-200">🎛️ Hiperparámetros Críticos</h2>
+            <div class="space-y-4">
+                <div class="p-4 bg-slate-50 rounded-lg">
+                    <span class="font-mono text-indigo-600 font-bold">eta (Learning Rate):</span>
+                    <p class="text-sm text-slate-600 mt-1">Controla el tamaño de paso o contracción del algoritmo (por defecto es 0.3)[cite: 43, 46]. Un valor menor ayuda a evitar el sobreajuste al ralentizar el aprendizaje[cite: 48].</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                    <span class="font-mono text-indigo-600 font-bold">n_estimators:</span>
+                    <p class="text-sm text-slate-600 mt-1">Especifica el número de árboles secuenciales a construir[cite: 50]. Añadir demasiados puede generar sobreajuste, por lo que suele equilibrarse bajando la tasa <code>eta</code>[cite: 54].</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                    <span class="font-mono text-indigo-600 font-bold">max_depth:</span>
+                    <p class="text-sm text-slate-600 mt-1">Representa la profundidad máxima que puede alcanzar cada árbol (por defecto es 6)[cite: 60, 63]. Aumentar este valor incrementa la complejidad del modelo y el riesgo de sobreajuste[cite: 62].</p>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-lg">
+                    <span class="font-mono text-indigo-600 font-bold">gamma:</span>
+                    <p class="text-sm text-slate-600 mt-1">Controla la cantidad mínima de reducción de pérdida requerida para realizar una división adicional en un nodo[cite: 55]. Funciona como un parámetro de poda[cite: 117].</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-slate-900 text-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold text-emerald-400 mb-6 border-b pb-2 border-slate-700">🎯 Aplicaciones en el Mundo Real</h2>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
+                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Sistemas de Clasificación y Ranking:</strong> Recuperación de información optimizada mediante XGBRanker[cite: 66, 68].</li>
+                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Análisis Predictivo de Ventas:</strong> Modelado comercial masivo (ej. predicción de ventas en tiendas Walmart)[cite: 71].</li>
+                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Modelos GeoAI y Tabulares:</strong> Altamente utilizado en analítica de geodatos, salud y finanzas[cite: 134].</li>
+                <li class="flex items-start"><span class="text-emerald-400 mr-2">✔</span> <strong>Competencias en Kaggle:</strong> Es uno de los algoritmos más populares y ganadores debido a su velocidad y precisión combinadas[cite: 73, 135].</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-100 text-center py-6 text-xs text-slate-500 border-t border-slate-200 mt-12">
+        <p>Documentación generada con base en guías oficiales de XGBoost y analítica avanzada[cite: 137].</p>
+    </footer>
+
+</body>
+</html>
